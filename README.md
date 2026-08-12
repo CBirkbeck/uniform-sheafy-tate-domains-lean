@@ -198,16 +198,35 @@ numbering.
 | `Adic spaces/Comparator/` | the challenge/solution certificate pairs and their configs |
 | `Adic spaces/` (rest) | the supporting adic-spaces library the examples are built on: continuous valuations, `Spa`, Tate rings, rational subsets, the structure presheaf, completions, Čech cohomology, Milnor squares |
 | `Adic spaces/ScottishBook/` | the [Nonarchimedean Scottish Book](https://scripts.mit.edu/~kedlaya/wiki/index.php?title=The_Nonarchimedean_Scottish_Book) — Kedlaya's open-problem list, one module per problem, *statements only* |
-| `scripts/` | `certify.sh` and the `formalisation.yaml` generator/checker |
-| `formalisation.yaml` | generated inventory: every module and declaration, plus the informal→formal correspondence for every docstring citing a source, with statement digests |
-| `formalization.yaml` | hand-written self-report in the [mathlib-initiative v0.3 schema](https://github.com/mathlib-initiative/formalization.yaml) |
+| `scripts/` | `certify.sh` and the manifest generator/checker |
+| [`formalisation.yaml`](formalisation.yaml) | generated inventory (see below) |
+| [`formalization.yaml`](formalization.yaml) | hand-written self-report (see below) |
 
-Regenerate and verify the inventory with:
+### The two manifests
 
-```sh
-python3 scripts/gen_formalisation.py
-python3 scripts/check_formalisation.py
-```
+There are two, and the only thing distinguishing their filenames is British vs. American
+spelling — so, to be explicit about which is which:
+
+* **[`formalisation.yaml`](formalisation.yaml)** (`-s-`, `schema: 1`) is **generated**. It is
+  the full internal inventory: every one of the 392 modules and 7240 declarations, the
+  informal→formal correspondence for every docstring citing a source (Wedhorn, [FJP], [WP],
+  Huber, Stacks), and a digest of each declaration's *statement*, so the checker can tell a
+  renamed declaration from a restated one. It follows no external schema. Regenerate and
+  verify with:
+
+  ```sh
+  python3 scripts/gen_formalisation.py    # rewrites formalisation.yaml
+  python3 scripts/check_formalisation.py  # reports drift against the source
+  ```
+
+* **[`formalization.yaml`](formalization.yaml)** (`-z-`, `version: v0.3`) is **hand-written**
+  and small. It is the standards-conformant self-report in the
+  [mathlib-initiative schema](https://github.com/mathlib-initiative/formalization.yaml),
+  intended for outside readers and tooling: sources and their licences, scope, per-result
+  axiom status, automation provenance, cost caveats, and fidelity divergences. Fields that
+  need a human answer are deliberately left blank rather than guessed.
+
+If you only want one, read the second — it is a page long. The first is a machine artifact.
 
 A handful of docstrings in the supporting library (25 files) point at AINTLIB's internal
 planning notes — paths like `.mathlib-quality/…` or `docs/plans/…`. Those files are development
