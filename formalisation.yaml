@@ -28,19 +28,19 @@ references:
   stacks:
     title: 'The Stacks Project'
 summary:
-  modules: 392
-  declarations: 7240
-  public: 6656
-  documented: 5934
+  modules: 393
+  declarations: 7242
+  public: 6658
+  documented: 5936
   declarations_with_sorry: 155
-  results: 1099
+  results: 1101
   source_results: 212
 groups:
   - id: fjp
     description: 'The finite-jet pinching algebra ([FJP])'
-    modules: 52
-    declarations: 1653
-    results: 176
+    modules: 53
+    declarations: 1655
+    results: 178
     source_results: 27
     with_sorry: 0
   - id: wp
@@ -12224,7 +12224,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.Functoriality'
     file: 'Adic spaces/FJP/Over/Functoriality.lean'
-    line: 238
+    line: 98
     status: proved
     digest: '617c204bf189'
     sources:
@@ -12237,7 +12237,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.Functoriality'
     file: 'Adic spaces/FJP/Over/Functoriality.lean'
-    line: 297
+    line: 157
     status: proved
     digest: cbb867526192
     sources:
@@ -12250,7 +12250,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.Functoriality'
     file: 'Adic spaces/FJP/Over/Functoriality.lean'
-    line: 1955
+    line: 1815
     status: proved
     digest: '838e1aaa5d71'
     sources:
@@ -12263,7 +12263,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.Functoriality'
     file: 'Adic spaces/FJP/Over/Functoriality.lean'
-    line: 2026
+    line: 1886
     status: proved
     digest: '765d6b0aaa0b'
     sources:
@@ -12276,7 +12276,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.Functoriality'
     file: 'Adic spaces/FJP/Over/Functoriality.lean'
-    line: 2262
+    line: 2122
     status: proved
     digest: bc06ec9f0e94
     sources:
@@ -12289,7 +12289,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.Functoriality'
     file: 'Adic spaces/FJP/Over/Functoriality.lean'
-    line: 2361
+    line: 2221
     status: proved
     digest: '6b989a2f1189'
     sources:
@@ -12672,12 +12672,25 @@ results:
         at: '1.3'
         kind: Theorem
     statement: '[FJP] Theorem 1.3 (uniform), layer 2: 𝓐 over a discretely-valued base is uniform.'
-  - decl: FiniteJetOver.finiteJet_not_stablyUniform_of_dvr
+  - decl: FiniteJetOver.finiteJet_powerBounded_eq_unitBall_of_dvr
     kind: theorem
     group: fjp
     module: '«Adic spaces».FJP.Over.SheafyEndpoints'
     file: 'Adic spaces/FJP/Over/SheafyEndpoints.lean'
     line: 269
+    status: proved
+    digest: c35a057d379b
+    sources:
+      - ref: fjp
+        at: '1.1'
+        kind: Theorem
+    statement: '[FJP] Theorem 1.1 (𝓐° = 𝓐₀), layer 2.'
+  - decl: FiniteJetOver.finiteJet_not_stablyUniform_of_dvr
+    kind: theorem
+    group: fjp
+    module: '«Adic spaces».FJP.Over.SheafyEndpoints'
+    file: 'Adic spaces/FJP/Over/SheafyEndpoints.lean'
+    line: 275
     status: proved
     digest: '84a502b811b2'
     sources:
@@ -12867,12 +12880,25 @@ results:
         at: '2.3'
         kind: Proposition
     statement: 'Power-boundedness in 𝓐 is having norm at most one ([FJP] Prop 2.3: "If v(a) < 0 … a is not power-bounded.'
+  - decl: FiniteJetOver.powerBoundedSubring_eq_unitBall
+    kind: theorem
+    group: fjp
+    module: '«Adic spaces».FJP.Over.UniformDomain'
+    file: 'Adic spaces/FJP/Over/UniformDomain.lean'
+    line: 166
+    status: proved
+    digest: '2a44789a79d5'
+    sources:
+      - ref: fjp
+        at: '1.1'
+        kind: Theorem
+    statement: 'The power-bounded subring of 𝓐 is its unit ball 𝓐₀ ([FJP] Theorem 1.1''s A° = A₀).'
   - decl: FiniteJetOver.isUniform_JetA
     kind: theorem
     group: fjp
     module: '«Adic spaces».FJP.Over.UniformDomain'
     file: 'Adic spaces/FJP/Over/UniformDomain.lean'
-    line: 168
+    line: 177
     status: proved
     digest: bdc6992080c6
     sources:
@@ -12885,7 +12911,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.UniformDomain'
     file: 'Adic spaces/FJP/Over/UniformDomain.lean'
-    line: 291
+    line: 300
     status: proved
     digest: a6dafc6c8e94
     sources:
@@ -12898,7 +12924,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.UniformDomain'
     file: 'Adic spaces/FJP/Over/UniformDomain.lean'
-    line: 326
+    line: 335
     status: proved
     digest: '2176248cf64b'
     sources:
@@ -12911,7 +12937,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.UniformDomain'
     file: 'Adic spaces/FJP/Over/UniformDomain.lean'
-    line: 350
+    line: 359
     status: proved
     digest: f2816540a4d4
     sources:
@@ -12924,7 +12950,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.UniformDomain'
     file: 'Adic spaces/FJP/Over/UniformDomain.lean'
-    line: 410
+    line: 419
     status: proved
     digest: '33a180334dfc'
     sources:
@@ -12937,7 +12963,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.UniformDomain'
     file: 'Adic spaces/FJP/Over/UniformDomain.lean'
-    line: 459
+    line: 468
     status: proved
     digest: '25b3681e3f19'
     sources:
@@ -12950,7 +12976,7 @@ results:
     group: fjp
     module: '«Adic spaces».FJP.Over.UniformDomain'
     file: 'Adic spaces/FJP/Over/UniformDomain.lean'
-    line: 464
+    line: 473
     status: proved
     digest: '1ab723c4110a'
     sources:
@@ -17623,8 +17649,8 @@ modules:
   - name: '«Adic spaces».FJP.Over.Functoriality'
     group: fjp
     file: 'Adic spaces/FJP/Over/Functoriality.lean'
-    declarations: 173
-    public: 169
+    declarations: 159
+    public: 155
     with_sorry: 0
     results: 6
     sources:
@@ -17664,11 +17690,12 @@ modules:
   - name: '«Adic spaces».FJP.Over.SheafyEndpoints'
     group: fjp
     file: 'Adic spaces/FJP/Over/SheafyEndpoints.lean'
-    declarations: 35
-    public: 35
+    declarations: 36
+    public: 36
     with_sorry: 0
-    results: 11
+    results: 12
     sources:
+      - 'fjp:1.1'
       - 'fjp:1.3'
       - 'stacks:00VR'
       - 'wedhorn:8.20'
@@ -17695,14 +17722,23 @@ modules:
     with_sorry: 0
     results: 0
     sources: []
+  - name: '«Adic spaces».FJP.Over.TateInstances'
+    group: fjp
+    file: 'Adic spaces/FJP/Over/TateInstances.lean'
+    declarations: 14
+    public: 14
+    with_sorry: 0
+    results: 0
+    sources: []
   - name: '«Adic spaces».FJP.Over.UniformDomain'
     group: fjp
     file: 'Adic spaces/FJP/Over/UniformDomain.lean'
-    declarations: 33
-    public: 33
+    declarations: 34
+    public: 34
     with_sorry: 0
-    results: 11
+    results: 12
     sources:
+      - 'fjp:1.1'
       - 'fjp:2.3'
       - 'fjp:2.4'
   - name: '«Adic spaces».FJP.QuotientPowFlat'

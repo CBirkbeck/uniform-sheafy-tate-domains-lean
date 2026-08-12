@@ -41,8 +41,7 @@ A⟨W/ϖ⟩ ≅ k⟨X, Q⟩/(Q²),   X = W/ϖ,
 
 which is non-reduced, so `A` is not stably uniform.
 
-In Lean, over the witness base field `k = F((t))`, `A` is the pullback `𝓐 = 𝓑 ×_𝓓 𝓒` of the
-pinching (Milnor) square
+In Lean, `A` is the pullback `𝓐 = 𝓑 ×_𝓓 𝓒` of the pinching (Milnor) square
 
 | ring | |
 |---|---|
@@ -54,17 +53,25 @@ pinching (Milnor) square
 realised concretely as the closed subring of `𝓒` of series whose `Q⁰`- and `Q¹`-coefficients
 have nonnegative `W`-support.
 
-*Definition:* `FiniteJet.JetA F` in `Adic spaces/FJP/FiniteJetRings.lean`.
-*Endpoints:* `Adic spaces/FJP/FiniteJetMain.lean`.
+*Definition:* `FiniteJetOver.JetA K` in `Adic spaces/FJP/Over/JetRings.lean`, over an
+arbitrary complete ultrametric nontrivially-normed field `K`.
+*Endpoints:* `Adic spaces/FJP/Over/SheafyEndpoints.lean` and `Over/StrongSheafy.lean`, at the
+layer-2 (`_of_dvr`) form where the valuation ring of `K` is a DVR.
 
 | paper | Lean | certified |
 |---|---|---|
-| sheafy | `FiniteJet.finiteJet_isSheafy` | ✓ |
-| uniform | `FiniteJet.finiteJet_isUniform` | ✓ |
-| integral domain | `FiniteJet.finiteJet_isDomain` | ✓ |
-| non-noetherian | `FiniteJet.finiteJet_not_noetherian` | ✓ |
-| not stably uniform | `FiniteJet.finiteJet_not_stablyUniform` | ✓ |
-| strongly sheafy | `FiniteJet.finiteJet_tateExt_isSheafyComplete` (`FJP/StrongSheafy.lean`) | — |
+| sheafy | `FiniteJetOver.isSheafy_JetA_of_dvr` | ✓ |
+| uniform | `FiniteJetOver.finiteJet_isUniform_of_dvr` | ✓ |
+| integral domain | `FiniteJetOver.finiteJet_isDomain` | ✓ |
+| non-noetherian | `FiniteJetOver.finiteJet_not_noetherian` | ✓ |
+| `A° = A₀` | `FiniteJetOver.finiteJet_powerBounded_eq_unitBall_of_dvr` | ✓ |
+| strongly sheafy | `FiniteJetOver.finiteJet_tateExt_isSheafyComplete_of_dvr` | ✓ |
+| not stably uniform | `FiniteJetOver.finiteJet_not_stablyUniform_of_dvr` | ✓ |
+
+These are the declarations the paper's own `<lean>` references for Theorem 1.1 point at. A
+parallel development over the concrete witness base `k = F((t))` lives in
+`Adic spaces/FJP/` (`FiniteJet.JetA F`, endpoints in `FJP/FiniteJetMain.lean`); the
+general-base statements above specialise to it.
 
 ### [Theorem 8.1](https://cbirkbeck.github.io/uniform-sheafy-tate-domains/#thm-second-example-1-1) — the weighted-parity algebra
 
@@ -105,19 +112,19 @@ DVR, rather than a fixed witness field.
 
 ### Scope of the certificate
 
-The twelve ✓ rows above are the certified set: five for Theorem 1.1, seven for Theorem 8.1.
-The two remaining Theorem 1.1 conclusions are handled as follows.
+Fourteen statements are certified — seven per theorem — and together they are exactly the
+conclusions of the two theorems as the paper states them. Both certificates are over a
+general base: an arbitrary complete ultrametric nontrivially-normed field whose valuation
+ring is a discrete valuation ring. Neither is pinned to a concrete witness field.
 
-* **Strong sheafiness** is proved — every finite Tate extension of `JetA` is sheafy for every
-  valid ring of integral elements — in `Adic spaces/FJP/StrongSheafy.lean`, and over an
-  arbitrary complete discretely valued nonarchimedean base in
-  `Adic spaces/FJP/Over/StrongSheafy.lean`. It is `lake build`-checked but not yet part of the
-  comparator certificate.
-* **`A° = A₀` for the finite-jet ring** is not stated as a separate endpoint in
-  `FiniteJetMain.lean`. (For the weighted-parity algebra it is, and it is certified.)
-
-`Adic spaces/FJP/Over/` also redevelops the whole finite-jet construction over an arbitrary
-complete discretely valued nonarchimedean field rather than the witness base `F((t))`.
+The challenge files state all of this from the **definition layer** alone. For the finite-jet
+ring that required one refactor: the uniformizer-free `IsHuberRing`/`IsTateRing` instances,
+without which `¬ IsStablyUniform (JetA K)` does not even elaborate, used to live in
+`Over/Functoriality.lean` — a module whose import closure contains `Over/Chart.lean`, and so
+the proof of `not_isStablyUniform_JetA`. They now live in
+`Adic spaces/FJP/Over/TateInstances.lean`, whose closure is the definition layer plus the
+base-agnostic `FaithfulLocLift`, so the challenge can state the conclusions without seeing
+any proof of them.
 
 ---
 
@@ -154,7 +161,7 @@ cd /tmp/lean4export && git checkout \
 Then, from this repository's root:
 
 ```sh
-bash scripts/certify.sh                                     # Theorem 1.1 — five statements
+bash scripts/certify.sh                                     # Theorem 1.1 — seven statements
 CONFIG="Adic spaces/Comparator/wp-config.json" \
   bash scripts/certify.sh                                   # Theorem 8.1 — seven statements
 ```
@@ -250,7 +257,7 @@ toolchain, so the judging kernel and the judged development agree.
 
 ## On `sorry`
 
-**Every certified statement — all twelve — has a `sorry`-free proof closure.** This is not a
+**Every certified statement — all fourteen — has a `sorry`-free proof closure.** This is not a
 claim you have to take on trust: a `sorry` anywhere in a proof's closure shows up as the axiom
 `sorryAx`, and both comparator runs pass with an axiom set of exactly
 `[propext, Quot.sound, Classical.choice]`.
