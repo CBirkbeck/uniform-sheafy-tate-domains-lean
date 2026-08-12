@@ -324,8 +324,10 @@ def extract_file(project_root: Path, path: Path) -> list[Decl]:
     lines = text.split("\n")
     is_code = code_line_mask(lines)
     mod = module_name(project_root, path)
+    # Repo-relative path. In this standalone repository the project *is* the repo root; in
+    # the AINTLIB monorepo the project sat at projects/AdicSpaces, two levels down.
     try:
-        rel = str(path.relative_to(project_root.parents[1]))
+        rel = str(path.relative_to(project_root))
     except ValueError:
         rel = str(path)
 
