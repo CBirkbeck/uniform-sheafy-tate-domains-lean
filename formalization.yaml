@@ -1,12 +1,10 @@
 # formalization.yaml — self-report for the AdicSpaces project, in the schema of
 # https://github.com/mathlib-initiative/formalization.yaml (v0.3).
 #
-# NOTE ON THE TWO FILES. This is NOT the same artifact as the sibling
-# `formalisation.yaml` (British spelling, `schema: 1`). That one is a GENERATED
-# inventory — cited results, modules, statement digests — consumed by
-# `scripts/check_formalisation.py` to detect drift. It is an internal manifest and does not
-# follow any external schema. This file is the small, hand-written, standards-conformant
-# self-report intended for outside readers and tooling.
+# This is the hand-written, standards-conformant self-report for outside readers and
+# tooling. It is the only manifest this repository carries; upstream AINTLIB additionally
+# keeps a generated internal inventory (`formalisation.yaml`, British spelling) used to
+# detect drift between the source and a committed declaration list.
 #
 # FIELDS LEFT BLANK ARE NOT YET KNOWN — the remaining ones (the source licence, spend,
 # wall time, hardware, prompting notes, acknowledgements) are human-supplied and are
@@ -63,34 +61,38 @@ sources:
 status:
   scope: >-
     Huber/Tate rings, adic spectra, rational localizations and the structure presheaf
-    (Wedhorn); the finite-jet pinching algebra (Theorem 1.1) and its chart, over the
-    restricted Laurent-series base of the paper's earlier revision (any coefficient field)
-    with a generic-CDVF layer (`FiniteJetOver`); the weighted-parity algebra
-    (Theorem 8.1) — uniform, strongly sheafy, not stably uniform with a domain chart —
-    over an abstract complete ultrametric nonarchimedean field whose valuation ring is a
-    DVR; and formal statements of the Nonarchimedean Scottish Book problem list.
-  sorry_count: 0                   # scope: the formalization reported here — the twelve
-                                   # certified endpoints (five for Theorem 1.1, seven for
-                                   # Theorem 8.1) and their full proof closures. Their axiom
+    (Wedhorn); the finite-jet ring (Theorem 1.1) and its chart; the weighted-parity algebra
+    (Theorem 8.1) — both uniform, strongly sheafy, non-noetherian domains with `A° = A₀`
+    that are not stably uniform, the first with a non-reduced bad chart and the second with
+    a bad chart that is an integral domain; and formal statements of the Nonarchimedean
+    Scottish Book problem list. Both theorems are certified over an abstract complete
+    ultrametric nonarchimedean field whose valuation ring is a DVR, not over a fixed witness
+    field. A parallel finite-jet development over the concrete base `LaurentSeries F` is also
+    present (`FiniteJet`, as against the certified `FiniteJetOver`).
+  sorry_count: 0                   # scope: the formalization reported here — the fourteen
+                                   # certified endpoints (seven per theorem) and their full
+                                   # proof closures. Their axiom
                                    # sets are exactly [propext, Classical.choice, Quot.sound]
                                    # (no sorryAx), checked per-result by comparator. The
                                    # wider repository tree carries WIP `sorry`s outside this
-                                   # report's scope (Scottish Book problem STATEMENTS,
-                                   # general Wedhorn 8.28(b) campaign frontiers); see the
-                                   # generated `formalisation.yaml` per-group counts.
+                                   # report's scope (Scottish Book problem STATEMENTS, the
+                                   # quarantined WP/HeadReduced.lean route, and general
+                                   # Wedhorn 8.28(b) campaign frontiers). As of this commit:
+                                   # 155 declarations with `sorry` across the tree, none of
+                                   # them in the FJP group (0) or on a certified closure.
   sorry_in_definitions: 0
   axioms: ["propext", "Classical.choice", "Quot.sound"]
 
   main_results:
-    - declaration: "FiniteJet.finiteJet_isSheafy"
-      file: "Adic spaces/FJP/FiniteJetMain.lean"
+    - declaration: "FiniteJetOver.isSheafy_JetA_of_dvr"
+      file: "Adic spaces/FJP/Over/SheafTransfer.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: "Adic spaces/Comparator/comparator-config.json"
       literature_dependencies: []
 
-    - declaration: "FiniteJet.finiteJet_not_stablyUniform"
-      file: "Adic spaces/FJP/FiniteJetMain.lean"
+    - declaration: "FiniteJetOver.finiteJet_not_stablyUniform_of_dvr"
+      file: "Adic spaces/FJP/Over/SheafyEndpoints.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: "Adic spaces/Comparator/comparator-config.json"
