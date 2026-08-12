@@ -1,0 +1,26 @@
+# Lean formalisation accompanying
+#   *Uniform sheafy Tate domains that are not stably uniform* (Birkbeck–Torzewski)
+#   https://cbirkbeck.github.io/uniform-sheafy-tate-domains/
+#
+# One library, one external dependency (mathlib). The toolchain and the mathlib revision are
+# pinned to the Lean v4.33.0 release line — see README.md for why that line specifically.
+name = "UniformSheafyTateDomains"
+defaultTargets = ["«Adic spaces»"]
+
+[leanOptions]
+pp.unicode.fun = true
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "db584cd6d46c"     # mathlib release tag v4.33.0, 2026-08-10 — matches lean-toolchain
+
+# The library deliberately declares no `globs`: only the root module `Adic spaces.lean` is a
+# build target. That is what keeps `Adic spaces/Comparator/Challenge.lean` (whose proofs are
+# all `sorry`, by design) out of the default build — it is built by name, by scripts/certify.sh.
+[[lean_lib]]
+name = "«Adic spaces»"
+srcDir = "."
+[lean_lib.leanOptions]
+relaxedAutoImplicit = false
+maxSynthPendingDepth = 3

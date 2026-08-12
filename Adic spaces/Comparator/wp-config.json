@@ -1,0 +1,19 @@
+{
+    "challenge_module": "«Adic spaces».Comparator.WPChallenge",
+    "solution_module": "«Adic spaces».Comparator.WPSolution",
+    "theorem_names": [
+        "wp_8_1_isUniform",
+        "wp_8_1_isDomain",
+        "wp_8_1_not_isNoetherianRing",
+        "wp_8_1_powerBounded_eq_unitBall",
+        "wp_8_1_isSheafyComplete",
+        "wp_8_1_stronglySheafy",
+        "wp_8_1_not_isStablyUniform"
+    ],
+    "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+    ],
+    "enable_nanoda": false
+}
