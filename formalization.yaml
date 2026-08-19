@@ -21,25 +21,36 @@ project:
     be stably uniform.
 
     Buzzard–Verberkmoes and Mihara proved that a stably uniform Tate Huber ring is sheafy,
-    and it was open whether the converse holds. This project formalises two complete
-    uniform Tate algebras over a complete discretely valued nonarchimedean field that are
-    non-noetherian integral domains with `A° = A₀`, are *strongly* sheafy — every finite
+    leaving open whether every uniform sheafy Tate Huber ring is stably uniform (asked
+    explicitly by Hansen–Kedlaya, and as Question 7). The paper constructs two complete
+    uniform Tate algebras over a complete discretely valued nonarchimedean field `k` that
+    are non-noetherian integral domains with `A° = A₀`, are *strongly* sheafy — every finite
     Tate extension `A⟨V₁, …, Vₛ⟩` is sheafy, so in particular `(A, A°)` is a sheafy uniform
     Huber pair — and are nevertheless not stably uniform, because an explicit rational
     localisation fails to be uniform.
 
-    The first example (Theorem 1.1) is the finite-jet pinching algebra `𝓐`, the pullback of
-    a Milnor square with vertices the radius-one restricted Laurent algebra `k⟨W, W⁻¹⟩`, the
-    dual numbers `k⟨W, Q⟩/(Q²)`, and `k⟨W, W⁻¹⟩⟨Q⟩`; it is realised concretely as the closed
-    subring of `k⟨W, W⁻¹⟩⟨Q⟩` of series whose `Q⁰`- and `Q¹`-coefficients have nonnegative
-    `W`-support. Its bad chart `𝓐⟨W/ϖ⟩ ≅ k⟨X, Q⟩/(Q²)` is non-reduced. The second example
-    (Theorem 8.1) is the weighted-parity algebra `𝒜_w`, attached to an unbounded weight
-    `w : ℕ_{>0} → ℕ`, whose bad chart is an integral domain — so there the failure of stable
-    uniformity is not explained by a nilpotent.
+    The first example (Theorem 1.1) is the finite-jet pinching algebra `𝓐`, the pullback
+    `𝓐 = B ×_D C` of a Milnor square with `B = k⟨W, Q⟩/(Q²)` (dual numbers over `k⟨W⟩`),
+    `C = k⟨W, W⁻¹⟩⟨Q⟩` (restricted series over the radius-one Laurent algebra `k⟨W, W⁻¹⟩`)
+    and `D = k⟨W, W⁻¹⟩⟨Q⟩/(Q²)`; concretely, `𝓐` is the closed subring of `k⟨W, W⁻¹⟩⟨Q⟩`
+    of series whose `Q⁰`- and `Q¹`-coefficients have nonnegative `W`-support. Its bad chart
+    `𝓐⟨W/ϖ⟩ ≅ k⟨X, Q⟩/(Q²)` is non-reduced. The second example (Theorem 8.1) is the
+    weighted-parity algebra `𝒜_w`, attached to a weight `w : ℕ_{>0} → ℕ` with `w(n) ≥ 1`
+    unbounded; its bad chart is an integral domain, so there the failure of stable
+    uniformity is not explained by a nilpotent. The paper proves Theorem 8.1 for every such
+    weight; the formalisation establishes it for the weight `w(n) = n`, the instance the
+    paper's introduction announces.
 
     Both theorems are formalised over an abstract complete ultrametric nontrivially normed
-    field whose valuation ring is a discrete valuation ring, rather than over a fixed witness
-    field. The repository also contains the surrounding theory the statements are phrased in:
+    field whose valuation ring is a discrete valuation ring, not over a fixed witness field.
+    This submission's Comparator configuration (`comparator.json`) certifies the seven
+    conclusions of Theorem 1.1 — sheafy (for every ring of integral elements), uniform,
+    integral domain, nonnoetherian, `𝓐° = 𝓐₀`, strongly sheafy, not stably uniform — stated
+    self-containedly on Mathlib in `Palomar/Challenge.lean`; Theorem 8.1 is certified by the
+    repository's in-library configuration (`Adic spaces/Comparator/wp-config.json`), whose
+    challenge imports the library's own definitions.
+
+    The repository also contains the surrounding theory the statements are phrased in:
     Huber and Tate rings, bounded and power-bounded subsets, the adic spectrum and continuous
     valuations, rational localisations and the structure presheaf, and sheafiness in the sense
     of Wedhorn Definition 8.26 — developed following Wedhorn's *Adic Spaces*, including the
@@ -81,7 +92,7 @@ sources:
     note: >-
       The paper this repository formalises. Its two headline theorems are the results
       certified here: the finite-jet pinching algebra (Theorem 1.1) and the weighted-parity
-      algebra (Theorem 8.1). The Lean docstrings were written against an earlier revision
+      algebra (Theorem 8.1, formalised at the weight `w(n) = n`). The Lean docstrings were written against an earlier revision
       and cite these as [FJP] Thm 1.3 and [WP] thm 6.2; `Adic spaces/Comparator/README.md`
       carries the numbering crosswalk. A source author is an author of this formalisation,
       hence `participated`. No arXiv identifier or DOI as of 2026-08-19; the project page
