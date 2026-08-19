@@ -20,14 +20,16 @@
 # The script cds to the repo root itself, so it can be invoked from anywhere.
 #
 # CONFIG selects which certificate to run; the challenge/solution modules are read from it:
-#   default  — Adic spaces/Comparator/comparator-config.json   ([FJP] Theorem 1.1 = thm:main)
-#   also     — Adic spaces/Comparator/wp-config.json           ([WP] Theorem 8.1, the
-#              weighted-parity example)
+#   default  — comparator.json                                  the Palomar submission:
+#              [FJP] Theorem 1.1 stated self-containedly on Mathlib (`Palomar/Challenge.lean`)
+#   also     — Adic spaces/Comparator/comparator-config.json   ([FJP] Theorem 1.1, the
+#              in-library certificate whose challenge imports the library's definition layer)
+#            — Adic spaces/Comparator/wp-config.json           ([WP] Theorem 8.1, likewise)
 
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-CONFIG="${CONFIG:-Adic spaces/Comparator/comparator-config.json}"
+CONFIG="${CONFIG:-comparator.json}"
 
 COMPARATOR_DIR="${COMPARATOR_DIR:-/tmp/comparator}"
 export COMPARATOR_LEAN4EXPORT="${COMPARATOR_LEAN4EXPORT:-/tmp/lean4export/.lake/build/bin/lean4export}"
@@ -36,6 +38,9 @@ if ! command -v landrun >/dev/null 2>&1; then
 fi
 
 cd "$REPO_ROOT"
+
+# For the Palomar config, `Palomar/Defs.lean` must be the Challenge's definitions verbatim.
+if [ "$CONFIG" = "comparator.json" ]; then python3 scripts/gen-defs.py --check; fi
 
 # Both modules are deliberately outside defaultTargets (the challenge is full of `sorry`), so
 # they must be built by name. Build the challenge FIRST: comparator's guarantee assumes the

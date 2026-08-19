@@ -1,0 +1,19 @@
+{
+    "challenge_module": "Palomar.Challenge",
+    "solution_module": "Palomar.Solution",
+    "theorem_names": [
+        "Palomar.fjp_1_1_isSheafy",
+        "Palomar.fjp_1_1_isUniform",
+        "Palomar.fjp_1_1_isDomain",
+        "Palomar.fjp_1_1_not_isNoetherianRing",
+        "Palomar.fjp_1_1_powerBounded_eq_unitBall",
+        "Palomar.fjp_1_1_stronglySheafy",
+        "Palomar.fjp_1_1_not_isStablyUniform"
+    ],
+    "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+    ],
+    "enable_nanoda": false
+}

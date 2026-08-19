@@ -24,3 +24,18 @@ srcDir = "."
 [lean_lib.leanOptions]
 relaxedAutoImplicit = false
 maxSynthPendingDepth = 3
+
+# The Palomar submission library. Palomar requires every dotted component of the Challenge
+# and Solution module names to match `[A-Za-z_][A-Za-z0-9_']*`
+# (PalomarPolicy/CONTRIBUTING.md §2.2), which `«Adic spaces».Comparator.Challenge` fails on
+# the space. These modules carry the same certificates under space-free names.
+#
+# `Palomar/Challenge.lean` is additionally self-contained on Mathlib: Palomar forbids any
+# project source in the Challenge's transitive import closure (§2.4). It is not part of the
+# default build — it carries `sorry` by design, exactly as the Comparator challenge does.
+[[lean_lib]]
+name = "Palomar"
+srcDir = "."
+roots = ["Palomar.Challenge", "Palomar.Defs", "Palomar.Bridge", "Palomar.Bridge.Jet", "Palomar.Bridge.TateExt", "Palomar.Solution"]
+[lean_lib.leanOptions]
+relaxedAutoImplicit = false

@@ -1,62 +1,200 @@
-# formalization.yaml — self-report for the AdicSpaces project, in the schema of
-# https://github.com/mathlib-initiative/formalization.yaml (v0.3).
+# formalization.yaml — self-report for this repository, in the mathlib-initiative
+# schema v0.4 (https://github.com/mathlib-initiative/formalization.yaml), with the
+# additional fields the Palomar registry makes mandatory
+# (https://github.com/PalomarRegistry/PalomarPolicy/blob/main/CONTRIBUTING.md §3).
 #
-# This is the hand-written, standards-conformant self-report for outside readers and
-# tooling. It is the only manifest this repository carries; upstream AINTLIB additionally
-# keeps a generated internal inventory (`formalisation.yaml`, British spelling) used to
-# detect drift between the source and a committed declaration list.
+# `sources[].license` is the licence of the SOURCE MATERIAL being formalized — the paper
+# or notes whose statements were transcribed — not the licence of this Lean code, which is
+# `project.license`.
 #
-# FIELDS LEFT BLANK ARE NOT YET KNOWN — the remaining ones (the source licence, spend,
-# wall time, hardware, prompting notes, acknowledgements) are human-supplied and are
-# deliberately empty rather than guessed.
-#
-# `sources[].license` is the licence of the SOURCE MATERIAL being formalized — the paper or
-# notes whose statements were transcribed — not the licence of this Lean code, which is
-# `project.license` above.
+# FIELDS LEFT BLANK ARE NOT YET KNOWN. They are deliberately empty rather than guessed.
 
-version: "v0.3"
+version: "v0.4"
 
 project:
-  name: "uniform-sheafy-tate-domains-lean"
-  authors: ["Christopher Birkbeck", "Alex Torzewski"]   # [required]
-  license: "Apache-2.0"            # [required] matches the repository (LICENSE at the root)
-                                   # and the Lean file headers.
+  name: "Uniform sheafy Tate rings that are not stably uniform"
 
+  description: >-
+    A Lean 4 formalisation of the two counterexamples of *Uniform sheafy Tate rings that
+    are not stably uniform* (Birkbeck–Torzewski), which answer Question 7 of Kedlaya's
+    *Nonarchimedean Scottish Book* in the negative: a sheafy uniform Huber pair need not
+    be stably uniform.
+
+    Buzzard–Verberkmoes and Mihara proved that a stably uniform Tate Huber ring is sheafy,
+    and it was open whether the converse holds. This project formalises two complete
+    uniform Tate algebras over a complete discretely valued nonarchimedean field that are
+    non-noetherian integral domains with `A° = A₀`, are *strongly* sheafy — every finite
+    Tate extension `A⟨V₁, …, Vₛ⟩` is sheafy, so in particular `(A, A°)` is a sheafy uniform
+    Huber pair — and are nevertheless not stably uniform, because an explicit rational
+    localisation fails to be uniform.
+
+    The first example (Theorem 1.1) is the finite-jet pinching algebra `𝓐`, the pullback of
+    a Milnor square with vertices the radius-one restricted Laurent algebra `k⟨W, W⁻¹⟩`, the
+    dual numbers `k⟨W, Q⟩/(Q²)`, and `k⟨W, W⁻¹⟩⟨Q⟩`; it is realised concretely as the closed
+    subring of `k⟨W, W⁻¹⟩⟨Q⟩` of series whose `Q⁰`- and `Q¹`-coefficients have nonnegative
+    `W`-support. Its bad chart `𝓐⟨W/ϖ⟩ ≅ k⟨X, Q⟩/(Q²)` is non-reduced. The second example
+    (Theorem 8.1) is the weighted-parity algebra `𝒜_w`, attached to an unbounded weight
+    `w : ℕ_{>0} → ℕ`, whose bad chart is an integral domain — so there the failure of stable
+    uniformity is not explained by a nilpotent.
+
+    Both theorems are formalised over an abstract complete ultrametric nontrivially normed
+    field whose valuation ring is a discrete valuation ring, rather than over a fixed witness
+    field. The repository also contains the surrounding theory the statements are phrased in:
+    Huber and Tate rings, bounded and power-bounded subsets, the adic spectrum and continuous
+    valuations, rational localisations and the structure presheaf, and sheafiness in the sense
+    of Wedhorn Definition 8.26 — developed following Wedhorn's *Adic Spaces*, including the
+    strongly noetherian sheafiness theorem (Wedhorn 8.28(b)).
+
+  authors:
+    - "Christopher Birkbeck"
+    - "Alex Torzewski"
+
+  # [Palomar, required] People responsible for THIS submitted formalisation.
+  responsible_maintainers:
+    - "Christopher Birkbeck"
+    - "Alex Torzewski"
+
+  license: "Apache-2.0"   # matches the root LICENSE file and the Lean file headers.
+
+# [Palomar, required] Classification of the MATHEMATICS, not of the use of Lean or AI.
+classification:
+  arxiv:
+    - "math.AG"    # Algebraic Geometry — adic spaces / rigid analytic geometry
+    - "math.NT"    # Number Theory — nonarchimedean fields, the perfectoid milieu
+  msc2020:
+    - "14G22"      # Rigid analytic geometry
+    - "12J25"      # Non-Archimedean valued fields
+    - "13J10"      # Complete rings, completion
+    - "16W80"      # Topological and ordered rings and modules
+    - "14G45"      # Perfectoid spaces and mixed characteristic
+
+# [Palomar, required] Where the result came from. Exactly one entry carries the
+# substantive relationship (`formalizes`), so the derived origin is `source-based`.
 sources:
-  - title: "Adic Spaces (lecture notes)"
-    authors: ["Torsten Wedhorn"]
-    id: "wedhorn-adic-spaces"
-    type: "lecture-notes"
-    license: "arXiv nonexclusive-distrib/1.0"   # arXiv:1910.05934
-    author_contacted: "no"
-    prior_work: "None known in Lean at this scope."
-
   - title: "Uniform sheafy Tate rings that are not stably uniform"
     authors: ["Christopher Birkbeck", "Alex Torzewski"]
-    id: "fjp"
-    type: "preprint"
-    license: "none stated"         # no licence appears on the paper page; the authors may
-                                   # wish to state one
-    author_contacted: "n/a — a source author is an author of this formalization"
-    prior_work: >-
-      None known. The paper's two headline theorems are the results formalized here: the
-      finite-jet pinching algebra (Theorem 1.1 = `thm:main`; the Lean docstrings cite it as
-      [FJP] Thm 1.3, the revision they were written against) and the weighted-parity
-      example (Theorem 8.1; cited [WP] thm 6.2 in the docstrings).
-    # https://cbirkbeck.github.io/uniform-sheafy-tate-domains/
-    # No arXiv identifier or DOI as of 2026-08-10.
+    id: "https://cbirkbeck.github.io/uniform-sheafy-tate-domains/"
+    type: "paper"
+    relationship: "formalizes"
+    license: "none stated"
+    author_endorsement: "participated"
+    note: >-
+      The paper this repository formalises. Its two headline theorems are the results
+      certified here: the finite-jet pinching algebra (Theorem 1.1) and the weighted-parity
+      algebra (Theorem 8.1). The Lean docstrings were written against an earlier revision
+      and cite these as [FJP] Thm 1.3 and [WP] thm 6.2; `Adic spaces/Comparator/README.md`
+      carries the numbering crosswalk. A source author is an author of this formalisation,
+      hence `participated`. No arXiv identifier or DOI as of 2026-08-19; the project page
+      above is the most stable identifier that exists. Novelty of the mathematics is the
+      paper's claim, not a claim established by this formalisation.
+
+  - title: "Adic Spaces (lecture notes)"
+    authors: ["Torsten Wedhorn"]
+    id: "arXiv:1910.05934"
+    type: "paper"
+    relationship: "background"
+    license: "arXiv nonexclusive-distrib/1.0"
+    author_endorsement: "not-contacted"
+    note: >-
+      The source of the ambient theory: Huber and Tate rings (§6), bounded and power-bounded
+      subsets (§5), uniform and stably uniform pairs (Definitions 7.36, 7.37), rational
+      localisations and the structure presheaf (§7–8), and sheafiness (Definition 8.26,
+      Theorem 8.28(b)). Supplies the definitions the certified statements are phrased in, not
+      the result itself.
 
   - title: "The Nonarchimedean Scottish Book"
-    authors: ["Kiran S. Kedlaya (editor)"]
-    id: "nonarchimedean-scottish-book"
-    type: "problem-list"
-    license: "none stated"         # the wiki carries no explicit copyright/licence notice
-    author_contacted: "yes"
-    prior_work: "None known in Lean."
-    # https://scripts.mit.edu/~kedlaya/wiki/index.php?title=The_Nonarchimedean_Scottish_Book
-    # Here the problem list is STATED (Lean statements, `sorry` bodies as open problems);
-    # the two problems answered by the finite-jet algebra are certified on the
-    # `dev/adic-spaces` branch of the upstream AINTLIB repository.
+    authors: []
+    contributors:
+      - name: "Kiran S. Kedlaya"
+        role: "editor of the problem collection"
+    id: "https://scripts.mit.edu/~kedlaya/wiki/index.php?title=The_Nonarchimedean_Scottish_Book"
+    type: "web discussion"
+    relationship: "background"
+    license: "none stated"
+    author_endorsement: "not-contacted"
+    note: >-
+      The problem collection that poses Question 7 ("Let (A, A⁺) be a sheafy uniform Huber
+      pair. Is (A, A⁺) necessarily stably uniform?"), which the formalised theorems answer in
+      the negative. Recorded as background: it poses the question rather than supplying the
+      result. A community wiki with no explicit copyright or licence notice; the URL above is
+      the most stable identifier that exists.
+
+# Previous Lean work on this material, distinguished from the mathematical sources above.
+related_formalizations: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Claude Fable 5"]
+      framework: "Claude Code"
+      tool_setup: >-
+        AI-assisted throughout. Lean 4 with mathlib, driven by the `mathlib-quality` Claude
+        Code skill plugin (https://github.com/CBirkbeck/mathlib-quality), which supplies the
+        planning, proving, cleanup, decomposition and review workflows the formalisation was
+        carried out under. Developed upstream in AINTLIB
+        (https://github.com/CBirkbeck/AINTLIB): per-project dev branches in one Lake
+        workspace, with automated cleanup lanes on `main`. This repository is a standalone
+        extract of the adic-spaces project from that workspace.
+      cost:
+        wall_time: ""
+        spend_usd: "4 months of a Claude Code Max 20x subscription (flat-rate, not metered)"
+        hardware: ""
+      prompting_notes: >-
+        The source paper records that the Lean formalisation was carried out by Claude Code.
+        This entry covers the production of the LEAN CODE.
+
+    - method: "other"
+      models: ["ChatGPT 5.6 Sol"]
+      framework: ""
+      tool_setup: ""
+      cost:
+        wall_time: ""
+        spend_usd: "1 month of a ChatGPT Pro subscription (flat-rate, not metered)"
+        hardware: ""
+      prompting_notes: >-
+        Discovery of the underlying MATHEMATICS, not of the Lean code. Per the source paper's
+        abstract, its two main results are due to ChatGPT 5.6 Sol. Recorded here as a material
+        automated contribution to the result being registered; `other` is used because the
+        upstream vocabulary describes how a formalisation was produced and has no category for
+        the provenance of the theorem itself.
+
+  spend_usd: "4 months Claude Code Max 20x + 1 month ChatGPT Pro"
+  notes: >-
+    COST CAVEAT: both figures are flat-rate subscriptions, not per-token metering, and each
+    subscription covered all of the holder's work over that period rather than this project
+    alone. So the subscription cost is an UPPER BOUND on what is attributable here, not a
+    measurement of it, and no USD figure is quoted for that reason.
+
+    Statement-level certification is available via leanprover/comparator; see
+    `scripts/certify.sh` and the configs referenced under `status.main_results`. This
+    repository pins Lean v4.33.0 (stable) + mathlib v4.33.0 — the first stable release line
+    carrying the fix for kernel soundness bug leanprover/lean4#14576.
+
+# [Palomar, required] The review completed BEFORE submission. This is metadata about
+# work already done; it is not, and does not anticipate, the Palomar review.
+review:
+  status: "agent-reviewed"
+  reviewers:
+    - name: "mathlib-quality automated review lanes"
+      role: >-
+        Independent AI review passes over the Lean development (definition necessity,
+        generalisation, automation, mathlib naming and style), run as a distinct step from
+        the proving work. https://github.com/CBirkbeck/mathlib-quality
+    - name: "OpenAI Codex"
+      role: >-
+        Audit passes over the paper's claims against the Lean proofs, and over the
+        attribution of results, carried out in the companion paper repository
+        https://github.com/CBirkbeck/uniform-sheafy-tate-domains
+  notes: >-
+    No human peer review, and no external reviewer. The review recorded here is automated:
+    distinct AI passes examined the development after it was written, separately from the
+    agent that produced it.
+
+    Independently of review, the certified statements are checked mechanically:
+    leanprover/comparator pins each statement in a challenge module that cannot see its own
+    proof, replays the proof through the Lean kernel, and confirms the axiom set is within
+    {propext, Quot.sound, Classical.choice}. That is a mechanical check, not a review, and it
+    is not the basis for the status above.
 
 status:
   scope: >-
@@ -84,74 +222,80 @@ status:
   axioms: ["propext", "Classical.choice", "Quot.sound"]
 
   main_results:
-    - declaration: "FiniteJetOver.isSheafy_JetA_of_dvr"
-      file: "Adic spaces/FJP/Over/SheafTransfer.lean"
+    # The Palomar certificate: [FJP] Theorem 1.1 stated self-containedly on Mathlib in
+    # `Palomar/Challenge.lean` (every notion the statements use is defined there, on Mathlib
+    # alone) and proved in `Palomar/Solution.lean` by forwarding the library's theorems across
+    # `Palomar/Bridge*.lean`, which show the Challenge's notions are the library's. The
+    # declarations listed are the Challenge's; `comparator.json` selects all seven.
+    - declaration: "Palomar.fjp_1_1_isSheafy"
+      file: "Palomar/Challenge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "Palomar.fjp_1_1_isUniform"
+      file: "Palomar/Challenge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "Palomar.fjp_1_1_isDomain"
+      file: "Palomar/Challenge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "Palomar.fjp_1_1_not_isNoetherianRing"
+      file: "Palomar/Challenge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "Palomar.fjp_1_1_powerBounded_eq_unitBall"
+      file: "Palomar/Challenge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "Palomar.fjp_1_1_stronglySheafy"
+      file: "Palomar/Challenge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "Palomar.fjp_1_1_not_isStablyUniform"
+      file: "Palomar/Challenge.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+
+    # The library's own endpoints, certified by the in-library comparator configs (whose
+    # challenges import the library's definition layer rather than restating it).
+    - declaration: "FiniteJetOver.finiteJet_isSheafyComplete_of_dvr"
+      file: "Adic spaces/FJP/Over/SheafyEndpoints.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: "Adic spaces/Comparator/comparator-config.json"
       literature_dependencies: []
-
     - declaration: "FiniteJetOver.finiteJet_not_stablyUniform_of_dvr"
       file: "Adic spaces/FJP/Over/SheafyEndpoints.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: "Adic spaces/Comparator/comparator-config.json"
       literature_dependencies: []
-
     - declaration: "WeightedParity.weightedParity_isSheafyComplete_of_dvr"
       file: "Adic spaces/WP/Main.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: "Adic spaces/Comparator/wp-config.json"
       literature_dependencies: []
-
     - declaration: "WeightedParity.weightedParity_not_stablyUniform_of_dvr"
       file: "Adic spaces/WP/Main.lean"
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: "Adic spaces/Comparator/wp-config.json"
       literature_dependencies: []
-
-automation:
-  methods:
-    - method: "result discovery — the underlying mathematics"
-      models: ["ChatGPT 5.6 Sol"]
-      framework: ""
-      tool_setup: ""
-      cost:
-        wall_time: ""
-        spend_usd: "1 month of a ChatGPT Pro subscription (flat-rate, not metered)"
-        hardware: ""
-      prompting_notes: >-
-        Per the source paper's abstract, its two main results are due to ChatGPT 5.6 Sol.
-        This is provenance of the MATHEMATICS, not of the Lean code.
-    - method: "Lean formalization"
-      models: ["Claude Fable 5"]
-      framework: "Claude Code"
-      tool_setup: >-
-        Lean 4 with mathlib, driven by the `mathlib-quality` Claude Code skill plugin
-        (https://github.com/CBirkbeck/mathlib-quality), which supplies the planning,
-        proving, cleanup, decomposition and review workflows the formalisation was carried
-        out under. Developed upstream in AINTLIB (https://github.com/CBirkbeck/AINTLIB):
-        per-project dev branches in one Lake workspace, with automated cleanup lanes on
-        `main`. This repository is a standalone extract of the adic-spaces project from
-        that workspace.
-      cost:
-        wall_time: ""
-        spend_usd: "4 months of a Claude Code Max 20x subscription (flat-rate, not metered)"
-        hardware: ""
-      prompting_notes: >-
-        The source paper records that the Lean formalisation was carried out by Claude Code.
-  spend_usd: "4 months Claude Code Max 20x + 1 month ChatGPT Pro"
-  notes: >-
-    COST CAVEAT: both figures are flat-rate subscriptions, not per-token metering, and each
-    subscription covered all of the holder's work over that period rather than this project
-    alone. So the subscription cost is an UPPER BOUND on what is attributable here, not a
-    measurement of it, and no USD figure is quoted for that reason.
-    Statement-level certification is available via leanprover/comparator; see
-    `scripts/certify.sh` and the two configs referenced above. This repository pins Lean
-    v4.33.0 (stable) + mathlib v4.33.0 — the first stable release line carrying the fix
-    for kernel soundness bug leanprover/lean4#14576.
 
 fidelity:
   divergences: >-
@@ -171,10 +315,29 @@ fidelity:
     sheafiness of `WPA K (shiftWeight id s)` for every s, and sheafiness itself is
     "every valid ring of integral elements gives a sheaf" (`IsSheafyComplete`, the
     complete-ring form of Wedhorn Definition 8.26).
+    (4) SHEAFINESS AT TATE SCOPE. Wedhorn's Definition 8.26 is stated for arbitrary f-adic
+    rings; the formalisation defines it at Tate (analytic) scope only (`IsSheafyTateRing`),
+    because the restriction maps of Proposition 8.2 are derived from the complete-analytic
+    route. Kedlaya Remark 1.6.10 records that the analytic and non-analytic cases genuinely
+    differ. Both certified examples are Tate, so the statements are unaffected.
   statement_provenance: >-
-    Challenge files (`Adic spaces/Comparator/Challenge.lean`, `WPChallenge.lean`) restate
-    the headline conclusions from the definition layer only; their import closures contain
-    none of the proving modules (verified mechanically; see `Comparator/README.md`).
+    The Palomar Challenge (`Palomar/Challenge.lean`) is self-contained on Mathlib: it defines,
+    following Wedhorn, every notion its statements use — Huber/Tate rings, the adic spectrum,
+    rational localisations and their completions, the structure presheaf as a
+    `TopCat.Presheaf TopCommRingCat`, sheafiness as Mathlib's `TopCat.Presheaf.IsSheaf`, the
+    Tate algebras as Gauss-norm completions of polynomial rings, and `𝓐` as the closure of the
+    jet polynomials of [FJP] (1.7) — and imports no project source. `Palomar/Bridge.lean`
+    proves these notions agree with the library's (the completed localisations are the same
+    type; restriction families are unique; the Challenge's sheafiness is equivalent to the
+    library's finite rational-cover criterion, `PalomarBridge.isSheafy_iff`), and
+    `Palomar/Bridge/Jet.lean`, `Palomar/Bridge/TateExt.lean` that its rings are isometrically
+    isomorphic to the library's. Two presentational choices were made for the Challenge and
+    are equivalent to the library's statements, not weaker: sheafiness is stated for every
+    ring of integral elements (`IsSheafyComplete`, Wedhorn 8.26, which the library also
+    proves) rather than for `𝓐⁺ = 𝓐°` alone; and the Tate algebras `𝓐⟨X₁,…,Xₙ⟩` carry the
+    Gauss-norm topology, which the library identifies with its Tate-ring topology. The
+    in-library comparator challenges (`Adic spaces/Comparator/`) restate the conclusions from
+    the library's definition layer instead.
   checked_by: ""                   # human sign-off pending
 
 acknowledgements: ""

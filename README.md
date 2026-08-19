@@ -128,6 +128,33 @@ any proof of them.
 
 ---
 
+## The Palomar submission
+
+[Palomar](https://palomar-registry.org) registers machine-checked Lean proofs, with the rule
+that the **Challenge** — the small file a reader audits — imports nothing but Mathlib. Mathlib
+has no Huber rings or adic spaces, so the Palomar Challenge here is self-contained:
+
+| path | what it is |
+|---|---|
+| [`Palomar/Challenge.lean`](Palomar/Challenge.lean) | **[FJP] Theorem 1.1, stated on Mathlib alone**: Wedhorn's definitions (Huber/Tate rings, `Spa`, rational localisations and their completions, the structure presheaf as a `TopCat.Presheaf TopCommRingCat`, sheafiness as Mathlib's `TopCat.Presheaf.IsSheaf`), the Gauss-norm Tate algebras `R⟨G⟩ = Completion R[G]`, the ring `𝓐` as the closure of the jet polynomials of [FJP] (1.7), and the seven statements with `sorry`. Under 1000 lines, no project imports. |
+| [`Palomar/Solution.lean`](Palomar/Solution.lean) | the same seven, proved by forwarding the library's theorems across the bridges |
+| [`Palomar/Bridge.lean`](Palomar/Bridge.lean) | the Challenge's notions are the library's: the completed rational localisations are the same type; restriction families are unique (`RestrictionFamily.ext'`); the Challenge's sheafiness is the library's finite rational-cover criterion (`PalomarBridge.isSheafy_iff`, both directions) |
+| [`Palomar/Bridge/Jet.lean`](Palomar/Bridge/Jet.lean), [`Palomar/Bridge/TateExt.lean`](Palomar/Bridge/TateExt.lean) | the Challenge's `𝓐` and `𝓐⟨X₁,…,Xₙ⟩` are isometrically isomorphic to the library's (`jetAEquiv`, `gaussEquiv`): the Laurent-polynomial / polynomial embeddings are isometries with dense image, so the completions are the library's restricted-series rings |
+| [`Palomar/Defs.lean`](Palomar/Defs.lean) | *generated* (`scripts/gen-defs.py`): the Challenge minus its statements, imported by the Solution and bridges, because comparator forbids the Solution from importing the Challenge itself |
+| [`comparator.json`](comparator.json) | selects all seven statements |
+
+The Challenge's statements are equivalent to the library's endpoints, not weaker: sheafiness
+is stated for every ring of integral elements (`IsSheafyComplete`, Wedhorn 8.26, which the
+library also proves), and the Tate algebras carry the Gauss-norm topology, which the library
+identifies with its Tate-ring topology. The bridges are the proof of that; `formalization.yaml`
+records it under `fidelity.statement_provenance`.
+
+```sh
+bash scripts/certify.sh        # the Palomar certificate — ends `Your solution is okay!`
+```
+
+---
+
 ## Check it yourself
 
 ### Build
@@ -161,9 +188,11 @@ cd /tmp/lean4export && git checkout \
 Then, from this repository's root:
 
 ```sh
-bash scripts/certify.sh                                     # Theorem 1.1 — seven statements
+bash scripts/certify.sh                                     # Palomar: Theorem 1.1 on Mathlib alone
+CONFIG="Adic spaces/Comparator/comparator-config.json" \
+  bash scripts/certify.sh                                   # in-library: Theorem 1.1 — seven statements
 CONFIG="Adic spaces/Comparator/wp-config.json" \
-  bash scripts/certify.sh                                   # Theorem 8.1 — seven statements
+  bash scripts/certify.sh                                   # in-library: Theorem 8.1 — seven statements
 ```
 
 Each run ends `Your solution is okay!`.
@@ -202,17 +231,20 @@ numbering.
 | `Adic spaces/FJP/` | Theorem 1.1 — the finite-jet ring |
 | `Adic spaces/FJP/Over/` | the same over a general complete discretely valued base |
 | `Adic spaces/WP/` | Theorem 8.1 — the weighted-parity algebra |
-| `Adic spaces/Comparator/` | the challenge/solution certificate pairs and their configs |
+| `Palomar/` | the Palomar submission: the self-contained Challenge, the Solution, and the bridges (above) |
+| `Adic spaces/Comparator/` | the in-library certificate pairs and their configs (their challenges import the library's definition layer) |
 | `Adic spaces/` (rest) | the supporting adic-spaces library the examples are built on: continuous valuations, `Spa`, Tate rings, rational subsets, the structure presheaf, completions, Čech cohomology, Milnor squares |
 | `Adic spaces/ScottishBook/` | the [Nonarchimedean Scottish Book](https://scripts.mit.edu/~kedlaya/wiki/index.php?title=The_Nonarchimedean_Scottish_Book) — Kedlaya's open-problem list, one module per problem, *statements only* |
-| `scripts/certify.sh` | the comparator run, plus its one-time setup instructions |
+| `scripts/certify.sh` | the comparator run (`CONFIG` selects the Palomar or in-library certificate), plus its one-time setup instructions |
+| `scripts/gen-defs.py` | regenerates `Palomar/Defs.lean` from the Challenge; `--check` in CI |
+| `scripts/validate-formalization-yaml.py` | Palomar's mechanical checks on `formalization.yaml` |
 | [`formalization.yaml`](formalization.yaml) | the formalisation self-report (below) |
 
 ### The manifest
 
 [`formalization.yaml`](formalization.yaml) is a self-report in the
 [mathlib-initiative schema](https://github.com/mathlib-initiative/formalization.yaml)
-(v0.3): the sources and their licences, the scope of what is formalised, the per-result
+(v0.4, with the fields Palomar requires): the sources and their licences, the scope of what is formalised, the per-result
 axiom status and comparator config for each headline theorem, the automation provenance
 with its cost caveats, and the fidelity divergences from the paper. Fields that need a human
 answer are left blank rather than guessed. It is a page long and is the right place to start
