@@ -15,46 +15,29 @@ project:
   name: "Uniform sheafy Tate rings that are not stably uniform"
 
   description: >-
-    A Lean 4 formalisation of the two counterexamples of *Uniform sheafy Tate rings that
-    are not stably uniform* (Birkbeck–Torzewski), which answer Question 7 of Kedlaya's
-    *Nonarchimedean Scottish Book* in the negative: a sheafy uniform Huber pair need not
-    be stably uniform.
+    A Lean 4 formalisation of *Uniform sheafy Tate rings that are not stably uniform*
+    (Birkbeck–Torzewski), answering Question 7 of Kedlaya's *Nonarchimedean Scottish Book* in
+    the negative: a sheafy uniform Huber pair need not be stably uniform. Buzzard–Verberkmoes
+    and Mihara proved that stably uniform Tate Huber rings are sheafy; whether the converse
+    holds was open.
 
-    Buzzard–Verberkmoes and Mihara proved that a stably uniform Tate Huber ring is sheafy,
-    leaving open whether every uniform sheafy Tate Huber ring is stably uniform (asked
-    explicitly by Hansen–Kedlaya, and as Question 7). The paper constructs two complete
-    uniform Tate algebras over a complete discretely valued nonarchimedean field `k` that
-    are non-noetherian integral domains with `A° = A₀`, are *strongly* sheafy — every finite
-    Tate extension `A⟨V₁, …, Vₛ⟩` is sheafy, so in particular `(A, A°)` is a sheafy uniform
-    Huber pair — and are nevertheless not stably uniform, because an explicit rational
-    localisation fails to be uniform.
+    The paper gives two complete Tate algebras over a complete discretely valued field `k`
+    that are uniform, nonnoetherian integral domains with `A° = A₀`, strongly sheafy (every
+    Tate algebra `A⟨X₁, …, Xₙ⟩` is sheafy), and yet not stably uniform, because an explicit
+    rational localisation is not uniform. The first (Theorem 1.1) is the finite-jet pinching
+    algebra `𝓐 = B ×_D C`, the pullback of a Milnor square with `B = k⟨W, Q⟩/(Q²)`,
+    `C = k⟨W, W⁻¹⟩⟨Q⟩`, `D = C/(Q²)` — concretely, the series in `k⟨W, W⁻¹⟩⟨Q⟩` whose `Q⁰`-
+    and `Q¹`-coefficients have nonnegative `W`-support; its bad chart `𝓐⟨W/ϖ⟩ ≅ k⟨X, Q⟩/(Q²)`
+    is non-reduced. The second (Theorem 8.1) is the weighted-parity algebra `𝒜_w`, whose bad
+    chart is an integral domain; the paper proves it for every unbounded weight `w ≥ 1`, the
+    formalisation for `w(n) = n`.
 
-    The first example (Theorem 1.1) is the finite-jet pinching algebra `𝓐`, the pullback
-    `𝓐 = B ×_D C` of a Milnor square with `B = k⟨W, Q⟩/(Q²)` (dual numbers over `k⟨W⟩`),
-    `C = k⟨W, W⁻¹⟩⟨Q⟩` (restricted series over the radius-one Laurent algebra `k⟨W, W⁻¹⟩`)
-    and `D = k⟨W, W⁻¹⟩⟨Q⟩/(Q²)`; concretely, `𝓐` is the closed subring of `k⟨W, W⁻¹⟩⟨Q⟩`
-    of series whose `Q⁰`- and `Q¹`-coefficients have nonnegative `W`-support. Its bad chart
-    `𝓐⟨W/ϖ⟩ ≅ k⟨X, Q⟩/(Q²)` is non-reduced. The second example (Theorem 8.1) is the
-    weighted-parity algebra `𝒜_w`, attached to a weight `w : ℕ_{>0} → ℕ` with `w(n) ≥ 1`
-    unbounded; its bad chart is an integral domain, so there the failure of stable
-    uniformity is not explained by a nilpotent. The paper proves Theorem 8.1 for every such
-    weight; the formalisation establishes it for the weight `w(n) = n`, the instance the
-    paper's introduction announces.
-
-    Both theorems are formalised over an abstract complete ultrametric nontrivially normed
-    field whose valuation ring is a discrete valuation ring, not over a fixed witness field.
-    This submission's Comparator configuration (`comparator.json`) certifies the seven
-    conclusions of Theorem 1.1 — sheafy (for every ring of integral elements), uniform,
-    integral domain, nonnoetherian, `𝓐° = 𝓐₀`, strongly sheafy, not stably uniform — stated
-    self-containedly on Mathlib in `Palomar/Challenge.lean`; Theorem 8.1 is certified by the
-    repository's in-library configuration (`Adic spaces/Comparator/wp-config.json`), whose
-    challenge imports the library's own definitions.
-
-    The repository also contains the surrounding theory the statements are phrased in:
-    Huber and Tate rings, bounded and power-bounded subsets, the adic spectrum and continuous
-    valuations, rational localisations and the structure presheaf, and sheafiness in the sense
-    of Wedhorn Definition 8.26 — developed following Wedhorn's *Adic Spaces*, including the
-    strongly noetherian sheafiness theorem (Wedhorn 8.28(b)).
+    This submission certifies the seven conclusions of Theorem 1.1, stated self-containedly on
+    Mathlib in `Palomar/Challenge.lean` over an arbitrary complete ultrametric field with DVR
+    valuation ring; Theorem 8.1 is certified by the repository's in-library configuration.
+    The repository also develops the surrounding theory after Wedhorn's *Adic Spaces*: Huber
+    and Tate rings, the adic spectrum, rational localisations, the structure presheaf, and
+    sheafiness (Definition 8.26), including the strongly noetherian theorem (8.28(b)).
 
   authors:
     - "Christopher Birkbeck"
