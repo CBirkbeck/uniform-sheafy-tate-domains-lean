@@ -21,7 +21,7 @@
 #
 # CONFIG selects which certificate to run; the challenge/solution modules are read from it:
 #   default  — comparator.json                                  the Palomar submission:
-#              [FJP] Theorem 1.1 stated self-containedly on Mathlib (`Palomar/Challenge.lean`)
+#              [FJP] Theorem 1.1 stated self-containedly on Mathlib (`Challenge.lean`)
 #   also     — Adic spaces/Comparator/comparator-config.json   ([FJP] Theorem 1.1, the
 #              in-library certificate whose challenge imports the library's definition layer)
 #            — Adic spaces/Comparator/wp-config.json           ([WP] Theorem 8.1, likewise)

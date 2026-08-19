@@ -9,7 +9,7 @@ import Mathlib.Topology.Sheaves.Functors
 /-!
 # The Challenge's definitions are the library's
 
-`Palomar/Challenge.lean` restates the notions the certified theorems are phrased in — bounded
+`Challenge.lean` restates the notions the certified theorems are phrased in — bounded
 sets, Huber and Tate rings, the adic spectrum, rational localisations, the structure presheaf,
 sheafiness — self-containedly on Mathlib, because Palomar forbids project source in a
 Challenge's import closure. This file proves that each restatement agrees with the library's

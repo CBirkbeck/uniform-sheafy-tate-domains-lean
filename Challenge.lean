@@ -34,7 +34,7 @@ stably uniform* (Birkbeck–Torzewski, Theorem 1.1) — the finite-jet pinching 
 complete discretely valued nonarchimedean field is a uniform, strongly sheafy, nonnoetherian
 Tate domain with `𝓐° = 𝓐₀` that is **not stably uniform** — stated with `sorry` proofs in §12,
 for verification by [leanprover/comparator](https://github.com/leanprover/comparator) against
-`Palomar/Solution.lean`. This answers Question 7 of Kedlaya's *Nonarchimedean Scottish Book*
+`Solution.lean`. This answers Question 7 of Kedlaya's *Nonarchimedean Scottish Book*
 (is a sheafy uniform Huber pair stably uniform?) in the negative.
 
 ## Why this file repeats the definitions
@@ -54,7 +54,7 @@ completion of `R[G]` for the Gauss norm; `𝓐` is the closure in `K⟨W, W⁻¹
 `f₀(W) + Q f₁(W) + Q² h`, `f₀, f₁ ∈ K[W]` ([FJP] (1.7)); `𝓐⟨X₁, …, Xₙ⟩ = Completion 𝓐[X]`; the
 unit ball with a constant of norm `< 1` is a pair of definition, so `𝓐` is Tate.
 
-`Palomar/Solution.lean` proves each statement by showing these notions agree with the
+`Solution.lean` proves each statement by showing these notions agree with the
 library's (`Palomar/Bridge.lean`: same completed localisations, unique restriction families,
 sheafiness here ↔ the library's rational-cover criterion; `Palomar/Bridge/Jet.lean`,
 `Palomar/Bridge/TateExt.lean`: the rings are isometrically isomorphic to the library's) and
@@ -487,25 +487,27 @@ localisation topology (Wedhorn §8.1, equation 8.1.1). -/
 noncomputable def presheafValue (D : RationalLocData A) : Type _ :=
   @UniformSpace.Completion (Localization.Away D.s) D.uniformSpace
 
-noncomputable instance (D : RationalLocData A) : CommRing (presheafValue D) :=
+noncomputable instance presheafValue.instCommRing (D : RationalLocData A) : CommRing (presheafValue D) :=
   @UniformSpace.Completion.commRing _ _ D.uniformSpace D.isUniformAddGroup
     D.isTopologicalRing
 
-noncomputable instance (D : RationalLocData A) : UniformSpace (presheafValue D) :=
+noncomputable instance presheafValue.instUniformSpace (D : RationalLocData A) : UniformSpace (presheafValue D) :=
   @UniformSpace.Completion.uniformSpace (Localization.Away D.s) D.uniformSpace
 
-noncomputable instance (D : RationalLocData A) : TopologicalSpace (presheafValue D) :=
+noncomputable instance presheafValue.instTopologicalSpace (D : RationalLocData A) :
+    TopologicalSpace (presheafValue D) :=
   @UniformSpace.toTopologicalSpace _ (@UniformSpace.Completion.uniformSpace
     (Localization.Away D.s) D.uniformSpace)
 
-noncomputable instance (D : RationalLocData A) : IsTopologicalRing (presheafValue D) :=
+noncomputable instance presheafValue.instIsTopologicalRing (D : RationalLocData A) :
+    IsTopologicalRing (presheafValue D) :=
   @UniformSpace.Completion.topologicalRing _ _ D.uniformSpace
     D.isTopologicalRing D.isUniformAddGroup
 
-instance (D : RationalLocData A) : CompleteSpace (presheafValue D) :=
+instance presheafValue.instCompleteSpace (D : RationalLocData A) : CompleteSpace (presheafValue D) :=
   @UniformSpace.Completion.completeSpace _ D.uniformSpace
 
-instance (D : RationalLocData A) : T0Space (presheafValue D) :=
+instance presheafValue.instT0Space (D : RationalLocData A) : T0Space (presheafValue D) :=
   @UniformSpace.Completion.t0Space _ D.uniformSpace
 
 /-- The completion map `Aₛ →+* A⟨T/s⟩`, with dense image. -/
@@ -708,25 +710,27 @@ noncomputable def gaussGroupNorm : AddGroupNorm (AddMonoidAlgebra R G) where
   neg' x := by simp [gauss_neg]
   eq_zero_of_map_eq_zero' x hx := gauss_eq_zero_iff.mp (by exact_mod_cast hx)
 
-noncomputable instance : NormedAddCommGroup (AddMonoidAlgebra R G) :=
+noncomputable instance gaussNormedAddCommGroup : NormedAddCommGroup (AddMonoidAlgebra R G) :=
   gaussGroupNorm.toNormedAddCommGroup
 
 theorem nnnorm_eq_gauss (x : AddMonoidAlgebra R G) : ‖x‖₊ = gauss x := rfl
 
 /-- `R[G]` with the Gauss norm is a normed ring. -/
-noncomputable instance : NormedCommRing (AddMonoidAlgebra R G) :=
+noncomputable instance gaussNormedCommRing : NormedCommRing (AddMonoidAlgebra R G) :=
   { (inferInstance : NormedAddCommGroup (AddMonoidAlgebra R G)),
     (inferInstance : CommRing (AddMonoidAlgebra R G)) with
     norm_mul_le := fun x y => by exact_mod_cast gauss_mul_le x y }
 
-instance : IsUltrametricDist (AddMonoidAlgebra R G) :=
+instance gaussIsUltrametricDist : IsUltrametricDist (AddMonoidAlgebra R G) :=
   IsUltrametricDist.isUltrametricDist_of_forall_norm_add_le_max_norm fun x y => by exact_mod_cast gauss_add_le x y
 
--- Named at high priority so the statements elaborate identically in every environment (see
--- the module docstring); it is the same instance.
-instance (priority := 1100) : IsTopologicalRing (AddMonoidAlgebra R G) := inferInstance
+-- Pinned at high priority so the statements elaborate identically in every environment (see
+-- the module docstring); it is the same instance. All instances here are named explicitly,
+-- since auto-generated instance names can depend on the module name.
+instance (priority := 1100) gaussIsTopologicalRing : IsTopologicalRing (AddMonoidAlgebra R G) :=
+  inferInstance
 
-instance [NormOneClass R] : NormOneClass (AddMonoidAlgebra R G) where
+instance gaussNormOneClass [NormOneClass R] : NormOneClass (AddMonoidAlgebra R G) where
   norm_one := by
     classical
     rw [← coe_nnnorm, nnnorm_eq_gauss, NNReal.coe_eq_one]
@@ -756,7 +760,7 @@ abbrev TateAlgebra (R : Type u) [NormedCommRing R] [IsUltrametricDist R] (G : Ty
     [AddCommMonoid G] : Type u :=
   UniformSpace.Completion (AddMonoidAlgebra R G)
 
-instance : IsUltrametricDist (TateAlgebra R G) := by
+instance tateAlgebraIsUltrametricDist : IsUltrametricDist (TateAlgebra R G) := by
   refine IsUltrametricDist.isUltrametricDist_of_forall_norm_add_le_max_norm fun x y => ?_
   induction x, y using UniformSpace.Completion.induction_on₂ with
   | hp => exact isClosed_le (by fun_prop) (by fun_prop)
@@ -765,7 +769,7 @@ instance : IsUltrametricDist (TateAlgebra R G) := by
       UniformSpace.Completion.norm_coe, UniformSpace.Completion.norm_coe]
     exact IsUltrametricDist.norm_add_le_max a b
 
-instance [NormOneClass R] : NormOneClass (TateAlgebra R G) where
+instance tateAlgebraNormOneClass [NormOneClass R] : NormOneClass (TateAlgebra R G) where
   norm_one := by
     rw [← UniformSpace.Completion.coe_one, UniformSpace.Completion.norm_coe, norm_one]
 
@@ -929,7 +933,7 @@ theorem norm_C_mul (c : K) (x : JetA K) : ‖C K c * x‖ = ‖c‖ * ‖x‖ :=
 
 /-- `𝓐` is a Tate ring: the constants of norm `< 1` are norm-scaling topologically nilpotent
 units, and the unit ball `𝓐₀` with the ideal they generate is a pair of definition. -/
-instance : IsTateRing (JetA K) := by
+instance jetAIsTateRing : IsTateRing (JetA K) := by
   obtain ⟨c, hc⟩ := NontriviallyNormedField.non_trivial (α := K)
   have hc0 : c ≠ 0 := by rintro rfl; norm_num at hc
   have hC : ‖C K c⁻¹‖ = ‖c⁻¹‖ := by simpa using norm_C_mul K c⁻¹ 1

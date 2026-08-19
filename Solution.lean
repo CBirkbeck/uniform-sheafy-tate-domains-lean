@@ -11,11 +11,11 @@ import «Adic spaces»
 /-!
 # Palomar solution: [FJP] Theorem 1.1
 
-Proves each statement of `Palomar/Challenge.lean` by forwarding the library's theorem across
+Proves each statement of `Challenge.lean` by forwarding the library's theorem across
 the bridges of `Palomar/Bridge.lean` (the Challenge's notions are the library's) and
 `Palomar/Bridge/Jet.lean` (the Challenge's `𝓐` is the library's, `jetAEquiv`).
 
-This module does not import `Palomar/Challenge.lean` — Comparator forbids that, since the
+This module does not import `Challenge.lean` — Comparator forbids that, since the
 Challenge's theorems carry `sorry` — but `Palomar/Defs.lean`, the verbatim copy of its
 definitions, so that every constant appearing in a statement is the same constant in both
 environments. The statements below are spelled with fully qualified names; they elaborate to

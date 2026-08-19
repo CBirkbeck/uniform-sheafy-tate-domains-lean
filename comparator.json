@@ -1,6 +1,6 @@
 {
-    "challenge_module": "Palomar.Challenge",
-    "solution_module": "Palomar.Solution",
+    "challenge_module": "Challenge",
+    "solution_module": "Solution",
     "theorem_names": [
         "Palomar.fjp_1_1_isSheafy",
         "Palomar.fjp_1_1_isUniform",
